@@ -31,9 +31,7 @@ const getConnectionArgs = (connectionOptions: ConnectionOptions): string[] => {
 
   if (password) {
     if (!(username && password && host && port && database)) {
-      throw new Error(
-        'When password is provided, username, password, host, port and dbname must be provided',
-      )
+      throw new Error('When password is provided, username, password, host, port and dbname must be provided')
     }
 
     return [ `--dbname=postgresql://${username}:${password}@${host}:${port}/${database}` ]

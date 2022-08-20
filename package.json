@@ -1,5 +1,5 @@
 {
-  "name": "pg-dump-restore",
+  "name": "@redwert/pg-dump-restore",
   "version": "1.0.0",
   "description": "Nodejs wrapper around the pg_dump and pg_restore",
   "main": "lib/index.js",
@@ -47,6 +47,7 @@
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
     "eslint": "^8.22.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.8.4",
     "fs-extra": "^10.1.0",
     "jest": "^28.1.3",
