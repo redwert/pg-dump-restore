@@ -1,0 +1,21 @@
+# npm library files
+lib/
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+.idea/
+
+
+tests/test-dump.sql
+
+.npmrc
