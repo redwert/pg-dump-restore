@@ -4,7 +4,7 @@ services:
     image: "postgres:14.5"
     ports:
       - "5400:5432"
-    container_name: "postgres-14"
+    container_name: "postgres-14.5"
     environment:
       POSTGRES_USER: "test"
       POSTGRES_PASSWORD: "test"
