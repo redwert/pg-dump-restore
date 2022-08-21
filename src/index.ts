@@ -1,12 +1,12 @@
 import execa, { ExecaChildProcess } from 'execa'
 
 export type ConnectionOptions = {
-  port?: number;
-  host: string;
-  database: string;
-  username: string;
-  password: string;
-};
+  port?: number
+  host: string
+  database: string
+  username: string
+  password: string
+}
 
 export enum FormatEnum {
   Plain = 'plain',
@@ -16,15 +16,15 @@ export enum FormatEnum {
 }
 
 export type DumpOptionsType = {
-  filePath: string;
-  format?: FormatEnum;
-};
+  filePath: string
+  format?: FormatEnum
+}
 
 export type RestoreOptionsType = {
-  filePath: string;
-  clean?: boolean;
-  create?: boolean;
-};
+  filePath: string
+  clean?: boolean
+  create?: boolean
+}
 
 const getConnectionArgs = (connectionOptions: ConnectionOptions): string[] => {
   const { port = 5432, host, database, username, password } = connectionOptions
@@ -34,7 +34,7 @@ const getConnectionArgs = (connectionOptions: ConnectionOptions): string[] => {
       throw new Error('When password is provided, username, password, host, port and dbname must be provided')
     }
 
-    return [ `--dbname=postgresql://${username}:${password}@${host}:${port}/${database}` ]
+    return [`--dbname=postgresql://${username}:${password}@${host}:${port}/${database}`]
   }
 
   const argumentsMap: { [key: string]: string | number } = {
@@ -45,14 +45,11 @@ const getConnectionArgs = (connectionOptions: ConnectionOptions): string[] => {
     password,
   }
 
-  return Object.keys(argumentsMap).reduce(
-    (result: string[], key: string): string[] => {
-      if (argumentsMap[key]) result.push(`--${key}=${argumentsMap[key]}`)
+  return Object.keys(argumentsMap).reduce((result: string[], key: string): string[] => {
+    if (argumentsMap[key]) result.push(`--${key}=${argumentsMap[key]}`)
 
-      return result
-    },
-    [],
-  )
+    return result
+  }, [])
 }
 
 export const pgDump = async (
