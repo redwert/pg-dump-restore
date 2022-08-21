@@ -29,12 +29,12 @@ export type RestoreOptionsType = {
 const getConnectionArgs = (connectionOptions: ConnectionOptions): string[] => {
   const { port, host, database, username, password } = connectionOptions
 
-  const connectionOptionsArray = [ port, host, database, username, password ]
-  connectionOptionsArray.forEach(arg => {
+  const connectionOptionsArray = [port, host, database, username, password]
+  connectionOptionsArray.forEach((arg) => {
     if (arg === undefined) throw new Error('Connection options are missing')
   })
 
-  return [ `--dbname=postgresql://${username}:${password}@${host}:${port}/${database}` ]
+  return [`--dbname=postgresql://${username}:${password}@${host}:${port}/${database}`]
 }
 
 export const pgDump = async (
