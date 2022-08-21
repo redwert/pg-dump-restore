@@ -1,7 +1,7 @@
 import execa, { ExecaChildProcess } from 'execa'
 
 export type ConnectionOptions = {
-  port?: number
+  port: number
   host: string
   database: string
   username: string
@@ -27,29 +27,14 @@ export type RestoreOptionsType = {
 }
 
 const getConnectionArgs = (connectionOptions: ConnectionOptions): string[] => {
-  const { port = 5432, host, database, username, password } = connectionOptions
+  const { port, host, database, username, password } = connectionOptions
 
-  if (password) {
-    if (!(username && password && host && port && database)) {
-      throw new Error('When password is provided, username, password, host, port and dbname must be provided')
-    }
+  const connectionOptionsArray = [ port, host, database, username, password ]
+  connectionOptionsArray.forEach(arg => {
+    if (arg === undefined) throw new Error('Connection options are missing')
+  })
 
-    return [`--dbname=postgresql://${username}:${password}@${host}:${port}/${database}`]
-  }
-
-  const argumentsMap: { [key: string]: string | number } = {
-    host,
-    port,
-    dbname: database,
-    username: username,
-    password,
-  }
-
-  return Object.keys(argumentsMap).reduce((result: string[], key: string): string[] => {
-    if (argumentsMap[key]) result.push(`--${key}=${argumentsMap[key]}`)
-
-    return result
-  }, [])
+  return [ `--dbname=postgresql://${username}:${password}@${host}:${port}/${database}` ]
 }
 
 export const pgDump = async (

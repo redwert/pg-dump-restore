@@ -30,13 +30,13 @@
     "postgres"
   ],
   "author": "Pavlo Petryk",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/redwert/pg-dump-restore/issues"
   },
   "homepage": "https://github.com/redwert/pg-dump-restore#readme",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry":"https://registry.npmjs.org"
   },
   "dependencies": {
     "execa": "^5.1.1"
