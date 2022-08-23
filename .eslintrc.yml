@@ -13,11 +13,7 @@
     no-shadow: off,
     no-useless-constructor: off,
     import/prefer-default-export: off,
-    import/extensions: [
-      error,
-      ignorePackages,
-      { js: never, jsx: 'never', ts: 'never', tsx: 'never' },
-    ],
+    import/extensions: [ 'error', 'never' ],
     max-len: [
       error,
       {

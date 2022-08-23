@@ -1,9 +1,9 @@
-import { DatabaseMock } from './database.mock'
+import { DatabaseMock } from './database-mock'
 import { ConnectionOptions, pgDump, DumpOptionsType, FormatEnum, pgRestore, RestoreOptionsType } from '../src/index'
 import { pathExists, remove } from 'fs-extra'
 import { join } from 'path'
 
-const filePath = join(__dirname, 'test-dump.sql')
+const filePath = join(__dirname, 'test.dump')
 
 const connectionOptions: ConnectionOptions = {
   host: 'localhost',
