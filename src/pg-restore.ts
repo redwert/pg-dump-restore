@@ -133,7 +133,7 @@ export const pgRestore = async (
   }
 
   Object.keys(paramsMap).forEach(key => {
-    if (paramsMap[key]) args.push(`--${key}=${paramsMap[key]}`)
+    if (paramsMap[key]) args.push(`--${key}`)
   })
 
   return execa('pg_restore', args, {})

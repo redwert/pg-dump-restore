@@ -171,7 +171,7 @@ export const pgDump = async (
   }
 
   Object.keys(paramsMap).forEach(key => {
-    if (paramsMap[key]) args.push(`--${key}=${paramsMap[key]}`)
+    if (paramsMap[key]) args.push(`--${key}`)
   })
 
   return await execa('pg_dump', args, {})
