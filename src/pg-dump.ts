@@ -115,7 +115,7 @@ export const pgDump = async (
     version,
   } = dumpOptions
 
-  args.push(`--file=${format}`)
+  args.push(`--format=${format}`)
   if (filePath) args.push(`--file=${filePath}`)
   if (extensionPattern) args.push(`--extension=${extensionPattern}`)
   if (encoding) args.push(`--encoding=${encoding}`)

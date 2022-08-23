@@ -9,7 +9,7 @@ export class DatabaseMock {
   patient: any
 
   constructor(connectionOptions: ConnectionOptions) {
-    const databaseConfig: Options = { dialect: 'postgres', ...connectionOptions }
+    const databaseConfig: Options = { dialect: 'postgres', ...connectionOptions, logging: false }
 
     this.sequelize = new Sequelize(databaseConfig)
     this.patient = this.sequelize.define(
