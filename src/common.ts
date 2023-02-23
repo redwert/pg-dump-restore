@@ -16,10 +16,10 @@ export enum FormatEnum {
 export const getConnectionArgs = (connectionOptions: ConnectionOptions): string[] => {
   const { port, host, database, username, password } = connectionOptions
 
-  const connectionOptionsArray = [ port, host, database, username, password ]
+  const connectionOptionsArray = [port, host, database, username, password]
   connectionOptionsArray.forEach((arg) => {
     if (arg === undefined) throw new Error('Connection options are missing')
   })
 
-  return [ `--dbname=postgresql://${username}:${password}@${host}:${port}/${database}` ]
+  return [`--dbname=postgresql://${username}:${password}@${host}:${port}/${database}`]
 }

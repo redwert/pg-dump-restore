@@ -86,7 +86,7 @@ export const pgRestore = async (
     useSetSessionAuthorization,
     noPassword,
     roleName,
-    noPrivileges
+    noPrivileges,
   } = restoreOptions
   if (!filePath) throw new Error('Needs filePath in the options')
 
@@ -135,7 +135,7 @@ export const pgRestore = async (
     'use-set-session-authorization': useSetSessionAuthorization,
   }
 
-  Object.keys(paramsMap).forEach(key => {
+  Object.keys(paramsMap).forEach((key) => {
     if (paramsMap[key]) args.push(`--${key}`)
   })
 

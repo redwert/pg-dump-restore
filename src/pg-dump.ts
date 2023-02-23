@@ -114,7 +114,7 @@ export const pgDump = async (
     useSetSessionAuthorization,
     roleName,
     version,
-    noPrivileges
+    noPrivileges,
   } = dumpOptions
 
   args.push(`--format=${format}`)
@@ -173,7 +173,7 @@ export const pgDump = async (
     'use-set-session-authorization': useSetSessionAuthorization,
   }
 
-  Object.keys(paramsMap).forEach(key => {
+  Object.keys(paramsMap).forEach((key) => {
     if (paramsMap[key]) args.push(`--${key}`)
   })
 
