@@ -40,6 +40,7 @@ export type RestoreOptionsType = {
   sectionName?: string
   noPassword?: boolean
   roleName?: string
+  noPrivileges?: boolean
 }
 
 export const pgRestore = async (
@@ -85,6 +86,7 @@ export const pgRestore = async (
     useSetSessionAuthorization,
     noPassword,
     roleName,
+    noPrivileges
   } = restoreOptions
   if (!filePath) throw new Error('Needs filePath in the options')
 
@@ -126,6 +128,7 @@ export const pgRestore = async (
     'no-security-labels': noSecurityLabels,
     'no-subscriptions': noSubscriptions,
     'no-tablespaces': noTableSpaces,
+    'no-privileges': noPrivileges,
     'schema-only': schemaOnly,
     'single-transaction': singleTransaction,
     'strict-names': strictNames,

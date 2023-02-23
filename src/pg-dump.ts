@@ -53,6 +53,7 @@ export type DumpOptionsType = {
   strictNames?: boolean
   useSetSessionAuthorization?: boolean
   roleName?: string
+  noPrivileges?: boolean
 }
 
 export const pgDump = async (
@@ -113,6 +114,7 @@ export const pgDump = async (
     useSetSessionAuthorization,
     roleName,
     version,
+    noPrivileges
   } = dumpOptions
 
   args.push(`--format=${format}`)
@@ -134,7 +136,7 @@ export const pgDump = async (
   if (snapshotName) args.push(`--snapshot=${snapshotName}`)
   if (roleName) args.push(`--role=${roleName}`)
 
-  const paramsMap: { [key: string]: boolean | undefined} = {
+  const paramsMap: { [key: string]: boolean | undefined } = {
     blobs,
     clean,
     create,
@@ -162,6 +164,7 @@ export const pgDump = async (
     'no-tablespaces': noTableSpaces,
     'no-toast-compression': noToastCompression,
     'no-unlogged-table-data': noUnloggedTableData,
+    'no-privileges': noPrivileges,
     'on-conflict-do-nothing': onConflictDoNothing,
     'quote-all-identifiers': quoteAllIdentifiers,
     'schema-only': schemaOnly,
