@@ -91,8 +91,7 @@ export const pgRestore = async (
   if (!filePath) throw new Error('Needs filePath in the options')
 
   const args: string[] = getConnectionArgs(connectionOptions)
-
-  args.push(filePath)
+  
   if (format) args.push(`--format=${format}`)
   if (fileName) args.push(`--filename=${fileName}`)
   if (index) args.push(`--index=${index}`)
@@ -138,6 +137,8 @@ export const pgRestore = async (
   Object.keys(paramsMap).forEach((key) => {
     if (paramsMap[key]) args.push(`--${key}`)
   })
+  
+  args.push(filePath)
 
   return execa('pg_restore', args, {})
 }
