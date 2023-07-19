@@ -60,6 +60,7 @@ export const pgDump = async (
   connectionOptions: ConnectionOptions,
   dumpOptions: DumpOptionsType,
 ): Promise<ExecaChildProcess> => {
+  const os = process.platform
   const args: string[] = getConnectionArgs(connectionOptions)
 
   const {
@@ -177,5 +178,5 @@ export const pgDump = async (
     if (paramsMap[key]) args.push(`--${key}`)
   })
 
-  return await execa('pg_dump', args, {})
+  return await execa(os == 'win32' ? 'pg_dump.exe' : 'pg_dump', args, {})
 }

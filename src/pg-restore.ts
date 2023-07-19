@@ -90,6 +90,7 @@ export const pgRestore = async (
   } = restoreOptions
   if (!filePath) throw new Error('Needs filePath in the options')
 
+  const os = process.platform
   const args: string[] = getConnectionArgs(connectionOptions)
 
   if (format) args.push(`--format=${format}`)
@@ -140,5 +141,5 @@ export const pgRestore = async (
 
   args.push(filePath)
 
-  return execa('pg_restore', args, {})
+  return execa(os == 'win32' ? 'pg_restore.exe' : 'pg_restore', args, {})
 }
