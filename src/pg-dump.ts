@@ -60,8 +60,8 @@ export const pgDump = async (
   connectionOptions: ConnectionOptions,
   dumpOptions: DumpOptionsType,
 ): Promise<ExecaChildProcess> => {
-  const args: string[] = getConnectionArgs(connectionOptions)
   const os = process.platform
+  const args: string[] = getConnectionArgs(connectionOptions)
 
   const {
     filePath,
