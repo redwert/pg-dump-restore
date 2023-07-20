@@ -1,6 +1,6 @@
 {
   "name": "pg-dump-restore",
-  "version": "1.1.0",
+  "version": "1.0.5",
   "description": "Nodejs wrapper around the pg_dump and pg_restore",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
