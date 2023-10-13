@@ -21,6 +21,7 @@ export const getConnectionArgs = (connectionOptions: ConnectionOptions): string[
     if (arg === undefined) throw new Error('Connection options are missing')
   })
 
+  // Add ability to use unix socket for postgresql connection URI
   if (host.startsWith('/')) {
     return [`--dbname=postgresql:///${database}?user=${username}&password=${password}&host=${host}&port=${port}`]
   }
