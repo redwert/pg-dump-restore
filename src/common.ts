@@ -21,5 +21,9 @@ export const getConnectionArgs = (connectionOptions: ConnectionOptions): string[
     if (arg === undefined) throw new Error('Connection options are missing')
   })
 
+  if (host.startsWith('/')) {
+    return [`--dbname=postgresql:///${database}?user=${username}&password=${password}&host=${host}&port=${port}`]
+  }
+
   return [`--dbname=postgresql://${username}:${password}@${host}:${port}/${database}`]
 }
