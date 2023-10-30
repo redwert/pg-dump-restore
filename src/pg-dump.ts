@@ -17,7 +17,7 @@ export type DumpOptionsType = {
   excludeSchemaPattern?: string
   tablePattern?: string
   excludeTablePattern?: string
-  excludeTableDataPattern?: string
+  excludeTableDataPattern?: string[]
   noOwner?: boolean
   noReconnect?: boolean
   schemaOnly?: boolean
@@ -89,7 +89,7 @@ export const pgDump = async (
     disableDollarQuoting,
     disableTriggers,
     enableRowSecurity,
-    excludeTableDataPattern,
+    excludeTableDataPattern = [],
     extraFloatDigits,
     ifExists,
     includeForeignData,
@@ -128,7 +128,7 @@ export const pgDump = async (
   if (tablePattern) args.push(`--table=${tablePattern}`)
   if (excludeTablePattern) args.push(`--exclude-table=${excludeTablePattern}`)
   if (compress !== undefined) args.push(`--compress=${compress}`)
-  if (excludeTableDataPattern) args.push(`--exclude-table-data=${excludeTableDataPattern}`)
+  args.push(...excludeTableDataPattern.map(item => `--exclude-table-data=${item}`))
   if (extraFloatDigits !== undefined) args.push(`--extra-float-digits=${extraFloatDigits}`)
   if (includeForeignData) args.push(`--include-foreign-data=${includeForeignData}`)
   if (lockWaitTimeout) args.push(`--lock-wait-timeout=${lockWaitTimeout}`)
