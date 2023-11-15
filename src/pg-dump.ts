@@ -128,7 +128,7 @@ export const pgDump = async (
   if (tablePattern) args.push(`--table=${tablePattern}`)
   if (excludeTablePattern) args.push(`--exclude-table=${excludeTablePattern}`)
   if (compress !== undefined) args.push(`--compress=${compress}`)
-  args.push(...excludeTableDataPattern.map(item => `--exclude-table-data=${item}`))
+  args.push(...excludeTableDataPattern.map((item) => `--exclude-table-data=${item}`))
   if (extraFloatDigits !== undefined) args.push(`--extra-float-digits=${extraFloatDigits}`)
   if (includeForeignData) args.push(`--include-foreign-data=${includeForeignData}`)
   if (lockWaitTimeout) args.push(`--lock-wait-timeout=${lockWaitTimeout}`)
