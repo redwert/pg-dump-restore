@@ -22,7 +22,7 @@ export const getConnectionArgs = (connectionOptions: ConnectionOptions): string[
   })
 
   // Add ability to use unix socket for postgresql connection URI
-  const encodedPass = encodeURIComponent(password);
+  const encodedPass = encodeURIComponent(password)
   if (host.startsWith('/')) {
     return [`--dbname=postgresql:///${database}?user=${username}&password=${encodedPass}&host=${host}&port=${port}`]
   }
