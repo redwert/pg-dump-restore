@@ -1,5 +1,5 @@
 import execa, { ExecaChildProcess } from 'execa'
-import { ConnectionOptions, FormatEnum, getConnectionArgs } from './common'
+import { ConnectionOptions, FormatEnum, getConnectionArgs, SslModeEnum } from './common'
 
 export type RestoreOptionsType = {
   filePath: string
@@ -91,21 +91,21 @@ export const pgRestore = async (
   if (!filePath) throw new Error('Needs filePath in the options')
 
   const os = process.platform
-  const args: string[] = getConnectionArgs(connectionOptions)
+  const { connectionArgs, sslMode } = getConnectionArgs(connectionOptions)
 
-  if (format) args.push(`--format=${format}`)
-  if (fileName) args.push(`--filename=${fileName}`)
-  if (index) args.push(`--index=${index}`)
-  if (jobs) args.push(`--jobs=${jobs}`)
-  if (useListFile) args.push(`--use-list=${useListFile}`)
-  if (schemaPattern) args.push(`--schema=${schemaPattern}`)
-  if (excludeSchemaPattern) args.push(`--exclude-schema=${excludeSchemaPattern}`)
-  if (functionName) args.push(`--function=${functionName}`)
-  if (superUser) args.push(`--superuser=${superUser}`)
-  if (table) args.push(`--table=${table}`)
-  if (trigger) args.push(`--trigger=${trigger}`)
-  if (sectionName) args.push(`--section=${sectionName}`)
-  if (roleName) args.push(`--role=${roleName}`)
+  if (format) connectionArgs.push(`--format=${format}`)
+  if (fileName) connectionArgs.push(`--filename=${fileName}`)
+  if (index) connectionArgs.push(`--index=${index}`)
+  if (jobs) connectionArgs.push(`--jobs=${jobs}`)
+  if (useListFile) connectionArgs.push(`--use-list=${useListFile}`)
+  if (schemaPattern) connectionArgs.push(`--schema=${schemaPattern}`)
+  if (excludeSchemaPattern) connectionArgs.push(`--exclude-schema=${excludeSchemaPattern}`)
+  if (functionName) connectionArgs.push(`--function=${functionName}`)
+  if (superUser) connectionArgs.push(`--superuser=${superUser}`)
+  if (table) connectionArgs.push(`--table=${table}`)
+  if (trigger) connectionArgs.push(`--trigger=${trigger}`)
+  if (sectionName) connectionArgs.push(`--section=${sectionName}`)
+  if (roleName) connectionArgs.push(`--role=${roleName}`)
 
   const paramsMap: { [key: string]: boolean | undefined } = {
     clean,
@@ -136,10 +136,13 @@ export const pgRestore = async (
   }
 
   Object.keys(paramsMap).forEach((key) => {
-    if (paramsMap[key]) args.push(`--${key}`)
+    if (paramsMap[key]) connectionArgs.push(`--${key}`)
   })
 
-  args.push(filePath)
+  connectionArgs.push(filePath)
 
-  return execa(os == 'win32' ? 'pg_restore.exe' : 'pg_restore', args, {})
+  const env: { PGSSLMODE?: SslModeEnum } = {}
+  if (sslMode) env.PGSSLMODE = sslMode
+
+  return execa(os == 'win32' ? 'pg_restore.exe' : 'pg_restore', connectionArgs, { env })
 }

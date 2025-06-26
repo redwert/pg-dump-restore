@@ -1,6 +1,6 @@
 # pg-dump-restore
 
-Utility that gives ability to call pg_dump and pg_restore from nodejs with all parameters.
+Utility that gives the ability to call pg_dump and pg_restore from nodejs with all parameters.
 Please see the [pg_dump](https://www.postgresql.org/docs/14/app-pgdump.html) and [pg_restore](https://www.postgresql.org/docs/14/app-pgrestore.html) documentation for details on the arguments.
 [execa](https://github.com/sindresorhus/execa) for details on the output streams.
 ## Usage

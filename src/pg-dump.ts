@@ -1,4 +1,4 @@
-import { ConnectionOptions, getConnectionArgs, FormatEnum } from './common'
+import { ConnectionOptions, getConnectionArgs, FormatEnum, SslModeEnum } from './common'
 import execa, { ExecaChildProcess } from 'execa'
 
 export type DumpOptionsType = {
@@ -61,7 +61,7 @@ export const pgDump = async (
   dumpOptions: DumpOptionsType,
 ): Promise<ExecaChildProcess> => {
   const os = process.platform
-  const args: string[] = getConnectionArgs(connectionOptions)
+  const { connectionArgs, sslMode } = getConnectionArgs(connectionOptions)
 
   const {
     filePath,
@@ -118,24 +118,24 @@ export const pgDump = async (
     noPrivileges,
   } = dumpOptions
 
-  args.push(`--format=${format}`)
-  if (filePath) args.push(`--file=${filePath}`)
-  if (extensionPattern) args.push(`--extension=${extensionPattern}`)
-  if (encoding) args.push(`--encoding=${encoding}`)
-  if (jobs) args.push(`--jobs=${jobs}`)
-  if (schemaPattern) args.push(`--schema=${schemaPattern}`)
-  if (excludeSchemaPattern) args.push(`--exclude-schema=${excludeSchemaPattern}`)
-  if (tablePattern) args.push(`--table=${tablePattern}`)
-  if (excludeTablePattern) args.push(`--exclude-table=${excludeTablePattern}`)
-  if (compress !== undefined) args.push(`--compress=${compress}`)
-  args.push(...excludeTableDataPattern.map((item) => `--exclude-table-data=${item}`))
-  if (extraFloatDigits !== undefined) args.push(`--extra-float-digits=${extraFloatDigits}`)
-  if (includeForeignData) args.push(`--include-foreign-data=${includeForeignData}`)
-  if (lockWaitTimeout) args.push(`--lock-wait-timeout=${lockWaitTimeout}`)
-  if (rowsPerInsert !== undefined) args.push(`--rows-per-insert=${rowsPerInsert}`)
-  if (sectionName) args.push(`--section=${sectionName}`)
-  if (snapshotName) args.push(`--snapshot=${snapshotName}`)
-  if (roleName) args.push(`--role=${roleName}`)
+  connectionArgs.push(`--format=${format}`)
+  if (filePath) connectionArgs.push(`--file=${filePath}`)
+  if (extensionPattern) connectionArgs.push(`--extension=${extensionPattern}`)
+  if (encoding) connectionArgs.push(`--encoding=${encoding}`)
+  if (jobs) connectionArgs.push(`--jobs=${jobs}`)
+  if (schemaPattern) connectionArgs.push(`--schema=${schemaPattern}`)
+  if (excludeSchemaPattern) connectionArgs.push(`--exclude-schema=${excludeSchemaPattern}`)
+  if (tablePattern) connectionArgs.push(`--table=${tablePattern}`)
+  if (excludeTablePattern) connectionArgs.push(`--exclude-table=${excludeTablePattern}`)
+  if (compress !== undefined) connectionArgs.push(`--compress=${compress}`)
+  connectionArgs.push(...excludeTableDataPattern.map((item) => `--exclude-table-data=${item}`))
+  if (extraFloatDigits !== undefined) connectionArgs.push(`--extra-float-digits=${extraFloatDigits}`)
+  if (includeForeignData) connectionArgs.push(`--include-foreign-data=${includeForeignData}`)
+  if (lockWaitTimeout) connectionArgs.push(`--lock-wait-timeout=${lockWaitTimeout}`)
+  if (rowsPerInsert !== undefined) connectionArgs.push(`--rows-per-insert=${rowsPerInsert}`)
+  if (sectionName) connectionArgs.push(`--section=${sectionName}`)
+  if (snapshotName) connectionArgs.push(`--snapshot=${snapshotName}`)
+  if (roleName) connectionArgs.push(`--role=${roleName}`)
 
   const paramsMap: { [key: string]: boolean | undefined } = {
     blobs,
@@ -175,8 +175,11 @@ export const pgDump = async (
   }
 
   Object.keys(paramsMap).forEach((key) => {
-    if (paramsMap[key]) args.push(`--${key}`)
+    if (paramsMap[key]) connectionArgs.push(`--${key}`)
   })
 
-  return await execa(os == 'win32' ? 'pg_dump.exe' : 'pg_dump', args, {})
+  const env: { PGSSLMODE?: SslModeEnum } = {}
+  if (sslMode) env.PGSSLMODE = sslMode
+
+  return await execa(os == 'win32' ? 'pg_dump.exe' : 'pg_dump', connectionArgs, { env })
 }

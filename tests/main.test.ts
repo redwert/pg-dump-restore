@@ -1,5 +1,5 @@
 import { DatabaseMock } from './database-mock'
-import { ConnectionOptions, pgDump, DumpOptionsType, FormatEnum, pgRestore, RestoreOptionsType } from '../src/index'
+import { ConnectionOptions, DumpOptionsType, FormatEnum, pgDump, pgRestore, RestoreOptionsType } from '../src/index'
 import { pathExists, remove } from 'fs-extra'
 import { join } from 'path'
 
