@@ -15,7 +15,7 @@ export type DumpOptionsType = {
   jobs?: number
   schemaPattern?: string
   excludeSchemaPattern?: string
-  tablePattern?: string
+  tablePattern?: string[]
   excludeTablePattern?: string
   excludeTableDataPattern?: string[]
   noOwner?: boolean
@@ -125,7 +125,7 @@ export const pgDump = async (
   if (jobs) connectionArgs.push(`--jobs=${jobs}`)
   if (schemaPattern) connectionArgs.push(`--schema=${schemaPattern}`)
   if (excludeSchemaPattern) connectionArgs.push(`--exclude-schema=${excludeSchemaPattern}`)
-  if (tablePattern) connectionArgs.push(`--table=${tablePattern}`)
+  connectionArgs.push(...tablePattern.map((item) => `--table=${item}`))
   if (excludeTablePattern) connectionArgs.push(`--exclude-table=${excludeTablePattern}`)
   if (compress !== undefined) connectionArgs.push(`--compress=${compress}`)
   connectionArgs.push(...excludeTableDataPattern.map((item) => `--exclude-table-data=${item}`))
