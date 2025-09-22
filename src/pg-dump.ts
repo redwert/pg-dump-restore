@@ -10,13 +10,13 @@ export type DumpOptionsType = {
   noBlobs?: boolean
   clean?: boolean
   create?: boolean
-  extensionPattern?: string
+  extensionPattern?: string[]
   encoding?: string
   jobs?: number
-  schemaPattern?: string
-  excludeSchemaPattern?: string
+  schemaPattern?: string[]
+  excludeSchemaPattern?: string[]
   tablePattern?: string[]
-  excludeTablePattern?: string
+  excludeTablePattern?: string[]
   excludeTableDataPattern?: string[]
   noOwner?: boolean
   noReconnect?: boolean
@@ -47,7 +47,7 @@ export type DumpOptionsType = {
   onConflictDoNothing?: boolean
   quoteAllIdentifiers?: boolean
   rowsPerInsert?: number
-  sectionName?: string
+  sectionName?: string[]
   serializableDeferrable?: boolean
   snapshotName?: string
   strictNames?: boolean
@@ -71,16 +71,16 @@ export const pgDump = async (
     noBlobs,
     clean,
     create,
-    extensionPattern,
+    extensionPattern = [],
     encoding,
     jobs,
-    schemaPattern,
-    excludeSchemaPattern,
+    schemaPattern = [],
+    excludeSchemaPattern = [],
     noOwner,
     noReconnect,
     schemaOnly,
-    tablePattern,
-    excludeTablePattern,
+    tablePattern = [],
+    excludeTablePattern = [],
     verbose,
     noAcl,
     compress,
@@ -108,7 +108,7 @@ export const pgDump = async (
     onConflictDoNothing,
     quoteAllIdentifiers,
     rowsPerInsert,
-    sectionName,
+    sectionName = [],
     serializableDeferrable,
     snapshotName,
     strictNames,
@@ -120,20 +120,20 @@ export const pgDump = async (
 
   connectionArgs.push(`--format=${format}`)
   if (filePath) connectionArgs.push(`--file=${filePath}`)
-  if (extensionPattern) connectionArgs.push(`--extension=${extensionPattern}`)
+  connectionArgs.push(...extensionPattern.map((item) => `--extension=${item}`))
   if (encoding) connectionArgs.push(`--encoding=${encoding}`)
   if (jobs) connectionArgs.push(`--jobs=${jobs}`)
-  if (schemaPattern) connectionArgs.push(`--schema=${schemaPattern}`)
-  if (excludeSchemaPattern) connectionArgs.push(`--exclude-schema=${excludeSchemaPattern}`)
+  connectionArgs.push(...schemaPattern.map((item) => `--schema=${item}`))
+  connectionArgs.push(...excludeSchemaPattern.map((item) => `--exclude-schema=${item}`))
   connectionArgs.push(...tablePattern.map((item) => `--table=${item}`))
-  if (excludeTablePattern) connectionArgs.push(`--exclude-table=${excludeTablePattern}`)
+  connectionArgs.push(...excludeTablePattern.map((item) => `--exclude-table=${item}`))
   if (compress !== undefined) connectionArgs.push(`--compress=${compress}`)
   connectionArgs.push(...excludeTableDataPattern.map((item) => `--exclude-table-data=${item}`))
   if (extraFloatDigits !== undefined) connectionArgs.push(`--extra-float-digits=${extraFloatDigits}`)
   if (includeForeignData) connectionArgs.push(`--include-foreign-data=${includeForeignData}`)
   if (lockWaitTimeout) connectionArgs.push(`--lock-wait-timeout=${lockWaitTimeout}`)
   if (rowsPerInsert !== undefined) connectionArgs.push(`--rows-per-insert=${rowsPerInsert}`)
-  if (sectionName) connectionArgs.push(`--section=${sectionName}`)
+  connectionArgs.push(...sectionName.map((item) => `--section=${item}`))
   if (snapshotName) connectionArgs.push(`--snapshot=${snapshotName}`)
   if (roleName) connectionArgs.push(`--role=${roleName}`)
 
