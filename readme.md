@@ -18,7 +18,7 @@ async function main() {
       password,
     },
     {
-      file: "./dump.sql",
+      filePath: "./dump.sql",
       format, // defaults to 'custom'
     },
   ); // outputs an execa object
@@ -37,7 +37,7 @@ async function main() {
       password,
     },
     {
-      filename: "./dump.sql", // note the filename instead of file, following the pg_restore naming.
+      filename: "./dump.sql", // note the filename instead of filePath, following the pg_restore naming.
       clean, // defaults to false
       create, // defaults to false
     }
@@ -61,7 +61,7 @@ async function main() {
       password,
     },
     {
-      file: "./dump.sql",
+      filePath: "./dump.sql",
       format, // defaults to 'custom'
       excludeTableDataPattern: ["table1", "table2"]
     },
